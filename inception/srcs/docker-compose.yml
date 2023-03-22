@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_data:/var/www/wordpress
+    restart: always
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    networks:
+      - network
+  
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql 
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - network
+    expose:
+      - "3306"
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    depends_on:
+      - mariadb
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - wp_data:/var/www/wordpress
+    networks:
+      - network
+
+  
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ccravero/data/db_data
+      o: bind
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ccravero/data/wp_data
+      o: bind
+
+networks:
+  network:
+    driver: bridge
