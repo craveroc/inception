@@ -10,4 +10,4 @@ COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # RUN chmod 755 /var/www/wordpress
 # RUN chown -R /var/www/wordpress
-CMD nginx -g "daemon off;"
+CMD ["nginx", "-g", "daemon off;"]

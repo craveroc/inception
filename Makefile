@@ -5,4 +5,5 @@ stop :
 	docker compose -f ./srcs/docker-compose.yml stop
 
 clean:
-	docker compose -f ./srcs/docker-compose.yml down -v
+	docker compose -f ./srcs/docker-compose.yml down
+	docker system prune -a -f
