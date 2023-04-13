@@ -15,6 +15,7 @@ services:
       - .env
     networks:
       - network
+    tty: true
   
   mariadb:
     container_name: mariadb
@@ -28,6 +29,7 @@ services:
       - network
     expose:
       - "3306"
+    tty: true
 
   wordpress:
     container_name: wordpress
@@ -41,6 +43,9 @@ services:
       - wp_data:/var/www/wordpress
     networks:
       - network
+    expose:
+      - "9000"
+    tty: true
 
   
 volumes:
